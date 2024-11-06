@@ -15,9 +15,9 @@ public class SwaggerConfig {
     public OpenAPI api() {
         return new OpenAPI()
                 .info(
-                        new Info().title("Modurang-Server API")
+                        new Info().title("Geunboni-Server API")
                                 .description("JAVA API")
-                                .version("1.0.0")
+                                .version("0.0.1")
                 )
                 .addSecurityItem(new SecurityRequirement().addList("Authorization"))
                 .components(
