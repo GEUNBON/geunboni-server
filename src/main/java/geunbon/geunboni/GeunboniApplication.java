@@ -11,5 +11,4 @@ public class GeunboniApplication {
     public static void main(String[] args) {
         SpringApplication.run(GeunboniApplication.class, args);
     }
-
 }

@@ -5,15 +5,12 @@ import geunbon.geunboni.domain.auth.dto.request.LoginRequest;
 import geunbon.geunboni.domain.auth.dto.request.ReissueRequest;
 import geunbon.geunboni.domain.auth.dto.request.SignUpRequest;
 import geunbon.geunboni.domain.auth.service.AuthService;
-import geunbon.geunboni.global.common.BaseResponse;
-import geunbon.geunboni.global.security.details.CustomUserDetails;
 import geunbon.geunboni.global.security.jwt.dto.Jwt;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "회원", description = "Auth")
@@ -26,34 +23,34 @@ public class AuthController {
 
     @Operation(summary = "회원가입")
     @PostMapping("/signup")
-    public ResponseEntity<BaseResponse<Void>> signup(@Valid @RequestBody SignUpRequest request) {
+    public ResponseEntity<Void> signup(@Valid @RequestBody SignUpRequest request) {
         authService.signup(request);
-        return BaseResponse.of(null, 201);
+        return ResponseEntity.status(201).body(null);
     }
 
     @Operation(summary = "로그인")
     @PostMapping("/login")
-    public ResponseEntity<BaseResponse<Jwt>> login(@Valid @RequestBody LoginRequest request) {
-        return BaseResponse.of(authService.login(request));
+    public ResponseEntity<Jwt> login(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 
     @Operation(summary = "엑세스 토큰 재발급")
     @PostMapping("/reissue")
-    public ResponseEntity<BaseResponse<Jwt>> reissue(@Valid @RequestBody ReissueRequest request) {
-        return BaseResponse.of(authService.reissue(request));
+    public ResponseEntity<Jwt> reissue(@Valid @RequestBody ReissueRequest request) {
+        return ResponseEntity.ok(authService.reissue(request));
     }
 
     @Operation(summary = "회원 탈퇴")
     @DeleteMapping("/resign")
-    public ResponseEntity<BaseResponse<Void>> deleteAccount(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        authService.deleteAccount(customUserDetails);
-        return BaseResponse.of(null);
+    public ResponseEntity<Void> deleteAccount() {
+        authService.deleteAccount();
+        return ResponseEntity.ok(null);
     }
 
     @Operation(summary = "비밀번호 변경")
     @PatchMapping("/password")
-    public ResponseEntity<BaseResponse<Void>> changePassword(@Valid @RequestBody ChangePasswordRequest request, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        authService.changePassword(request, customUserDetails);
-        return BaseResponse.of(null);
+    public ResponseEntity<Void> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
+        authService.changePassword(request);
+        return ResponseEntity.ok(null);
     }
 }

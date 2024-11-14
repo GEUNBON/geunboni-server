@@ -4,7 +4,6 @@ import geunbon.geunboni.domain.auth.dto.request.ChangePasswordRequest;
 import geunbon.geunboni.domain.auth.dto.request.LoginRequest;
 import geunbon.geunboni.domain.auth.dto.request.ReissueRequest;
 import geunbon.geunboni.domain.auth.dto.request.SignUpRequest;
-import geunbon.geunboni.global.security.details.CustomUserDetails;
 import geunbon.geunboni.global.security.jwt.dto.Jwt;
 
 public interface AuthService {
@@ -15,7 +14,7 @@ public interface AuthService {
 
     Jwt reissue(ReissueRequest request);
 
-    void changePassword(ChangePasswordRequest request, CustomUserDetails CustomUserDetails);
+    void deleteAccount();
 
-    void deleteAccount(CustomUserDetails CustomUserDetails);
+    void changePassword(ChangePasswordRequest request);
 }

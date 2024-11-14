@@ -6,6 +6,7 @@ import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -31,9 +32,9 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/auth/signup", "/auth/login", "/email/send", "/email/verify").anonymous()
-                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/notice").permitAll()
-                                .anyRequest().permitAll()
+                                .requestMatchers(HttpMethod.POST,"/auth/signup", "/auth/login", "/email/send", "/email/verify").anonymous()
+                                .requestMatchers(HttpMethod.GET,"/swagger-ui/**", "/v3/api-docs/**", "/notice").permitAll()
+                                .anyRequest().permitAll() //TODO
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

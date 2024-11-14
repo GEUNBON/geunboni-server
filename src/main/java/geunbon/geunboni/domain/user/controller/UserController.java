@@ -2,7 +2,6 @@ package geunbon.geunboni.domain.user.controller;
 
 import geunbon.geunboni.domain.user.dto.response.UserResponse;
 import geunbon.geunboni.domain.user.service.UserService;
-import geunbon.geunboni.global.common.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ public class UserController {
 
     @Operation(summary = "내 정보 조회")
     @GetMapping("/me")
-    public ResponseEntity<BaseResponse<UserResponse>> getMe() {
-        return BaseResponse.of(userService.getMe());
+    public ResponseEntity<UserResponse> getMe() {
+        return ResponseEntity.ok(userService.getMe());
     }
 }
